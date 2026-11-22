@@ -14,6 +14,6 @@ class ProductController
         $title = 'Xe chính hãng, giá tốt';
         $products = $this->modelProduct->getAllProduct();
         $categories = $this->modelProduct->getAllCategories();
-        require_once './views/trangchu.php';
+        require_once __DIR__ . '/../views/client/trangchu.php';
     }
 }

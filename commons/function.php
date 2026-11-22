@@ -12,6 +12,22 @@ function connectDB(): PDO
     return $conn;
 }
 
+function csrfToken(): string
+{
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+
+    return $_SESSION['csrf_token'];
+}
+
+function isValidCsrfToken($token): bool
+{
+    return is_string($token)
+        && isset($_SESSION['csrf_token'])
+        && hash_equals($_SESSION['csrf_token'], $token);
+}
+
 function uploadFile($file, $folderSave){
     $file_upload = $file;
     $pathStorage = $folderSave . rand(10000, 99999) . $file_upload['name'];

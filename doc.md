@@ -25,3 +25,19 @@ Mô hình MVC
 
 
 - Cấu hình DB trong file commons/env.php
+
+### Tài khoản
+
+Chọn database `duanmau` trong phpMyAdmin và import file `users.sql` để tạo bảng tài khoản. Form đăng ký lưu họ tên, email, mật khẩu dạng hash, số điện thoại và địa chỉ; người dùng có thể đăng ký, đăng nhập và đăng xuất từ trang chủ.
+
+### Trang quản trị
+
+Tài khoản đăng ký mới mặc định là người dùng thường. Để cấp quyền quản trị cho tài khoản, đăng nhập phpMyAdmin vào database `duanmau` và chạy (thay email bằng email tài khoản admin):
+
+```sql
+UPDATE users SET role = 1 WHERE email = 'admin@example.com';
+```
+
+Sau đó đăng xuất rồi đăng nhập lại để áp dụng quyền mới. Tài khoản admin có thể vào `index.php?act=admin` để thêm danh mục, thêm, sửa và xóa sản phẩm; các thao tác thay đổi dữ liệu chỉ được chấp nhận bằng POST có CSRF token hợp lệ.
+
+Trước khi lưu sản phẩm có giá lớn hơn 2.147.483.647 ₫, chạy nội dung `migrations/20261118_expand_product_price.sql` trên database `duanmau` bằng phpMyAdmin để đổi cột giá sang kiểu số thập phân.
